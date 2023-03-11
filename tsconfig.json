@@ -21,9 +21,4 @@
     }
   },
   "include": ["src"],
-  "references": [
-    { "path": "./tsconfig.node.json" },
-    { "path": "../../packages/tldraw" },
-    { "path": "../../packages/core" }
-  ]
 }
