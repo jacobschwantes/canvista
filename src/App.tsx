@@ -1,4 +1,4 @@
-import { useStateDesigner } from '@state-designer/react'
+import { useStateDesigner } from "@state-designer/react";
 import {
   Renderer,
   TLBounds,
@@ -6,194 +6,200 @@ import {
   TLPinchEventHandler,
   TLPointerEventHandler,
   TLWheelEventHandler,
-} from '@tldraw/core'
-import * as React from 'react'
-import { Api } from 'state/api'
-import styled from 'stitches.config'
-import { TitleLinks } from './components/TitleLinks'
-import { Toolbar } from './components/Toolbar'
-import { shapeUtils } from './shapes'
-import { machine } from './state/machine'
-import './styles.css'
+} from "@tldraw/core";
+import * as React from "react";
+import { Api } from "state/api";
+import styled from "stitches.config";
+import { TitleLinks } from "./components/TitleLinks";
+import { Toolbar } from "./components/Toolbar";
+import { shapeUtils } from "./shapes";
+import { machine } from "./state/machine";
+import "./styles.css";
 
-declare const window: Window & { api: Api }
+declare const window: Window & { api: Api };
 
 const onHoverShape: TLPointerEventHandler = (info, e) => {
-  machine.send('HOVERED_SHAPE', info)
-}
+  machine.send("HOVERED_SHAPE", info);
+};
 
 const onUnhoverShape: TLPointerEventHandler = (info, e) => {
-  machine.send('UNHOVERED_SHAPE', info)
-}
+  machine.send("UNHOVERED_SHAPE", info);
+};
 
 const onPointShape: TLPointerEventHandler = (info, e) => {
-  machine.send('POINTED_SHAPE', info)
-}
+  machine.send("POINTED_SHAPE", info);
+};
 
 const onPointCanvas: TLPointerEventHandler = (info, e) => {
-  machine.send('POINTED_CANVAS', info)
-}
+  machine.send("POINTED_CANVAS", info);
+};
 
 const onPointBounds: TLPointerEventHandler = (info, e) => {
-  machine.send('POINTED_BOUNDS', info)
-}
+  machine.send("POINTED_BOUNDS", info);
+};
 
 const onPointHandle: TLPointerEventHandler = (info, e) => {
-  machine.send('POINTED_HANDLE', info)
-}
+  machine.send("POINTED_HANDLE", info);
+};
 
 const onPointerDown: TLPointerEventHandler = (info, e) => {
-  machine.send('STARTED_POINTING', info)
-}
+  machine.send("STARTED_POINTING", info);
+};
 
 const onPointerUp: TLPointerEventHandler = (info, e) => {
-  machine.send('STOPPED_POINTING', info)
-}
+  machine.send("STOPPED_POINTING", info);
+};
 
 const onPointerMove: TLPointerEventHandler = (info, e) => {
-  machine.send('MOVED_POINTER', info)
-}
+  machine.send("MOVED_POINTER", info);
+};
 
 const onPan: TLWheelEventHandler = (info, e) => {
-  machine.send('PANNED', info)
-}
+  machine.send("PANNED", info);
+};
 
 const onPinchStart: TLPinchEventHandler = (info, e) => {
-  machine.send('STARTED_PINCHING', info)
-}
+  machine.send("STARTED_PINCHING", info);
+};
 
 const onPinch: TLPinchEventHandler = (info, e) => {
-  machine.send('PINCHED', info)
-}
+  machine.send("PINCHED", info);
+};
 
 const onPinchEnd: TLPinchEventHandler = (info, e) => {
-  machine.send('STOPPED_PINCHING', info)
-}
+  machine.send("STOPPED_PINCHING", info);
+};
 
 const onPointBoundsHandle: TLPinchEventHandler = (info, e) => {
-  machine.send('POINTED_BOUNDS_HANDLE', info)
-}
+  machine.send("POINTED_BOUNDS_HANDLE", info);
+};
 
 const onBoundsChange = (bounds: TLBounds) => {
-  machine.send('RESIZED', { bounds })
-}
+  machine.send("RESIZED", { bounds });
+};
 
 const onKeyDown: TLKeyboardEventHandler = (key, info, e) => {
   switch (key) {
-    case 'Alt':
-    case 'Meta':
-    case 'Control':
-    case 'Shift': {
-      machine.send('TOGGLED_MODIFIER', info)
-      break
+    case "Alt":
+    case "Meta":
+    case "Control":
+    case "Shift": {
+      machine.send("TOGGLED_MODIFIER", info);
+      break;
     }
-    case 'Backspace': {
-      machine.send('DELETED', info)
-      break
+    case "Backspace": {
+      machine.send("DELETED", info);
+      break;
     }
-    case 'Escape': {
-      machine.send('CANCELLED', info)
-      break
+    case "Escape": {
+      machine.send("CANCELLED", info);
+      break;
     }
-    case '0': {
-      machine.send('ZOOMED_TO_ACTUAL', info)
-      break
+    case "0": {
+      machine.send("ZOOMED_TO_ACTUAL", info);
+      break;
     }
-    case '1': {
-      machine.send('ZOOMED_TO_FIT', info)
-      break
+    case "1": {
+      machine.send("ZOOMED_TO_FIT", info);
+      break;
     }
-    case '2': {
-      machine.send('ZOOMED_TO_SELECTION', info)
-      break
+    case "2": {
+      machine.send("ZOOMED_TO_SELECTION", info);
+      break;
     }
-    case '=': {
+    case "=": {
       if (info.metaKey || info.ctrlKey) {
-        e.preventDefault()
-        machine.send('ZOOMED_IN', info)
+        e.preventDefault();
+        machine.send("ZOOMED_IN", info);
       }
-      break
+      break;
     }
-    case '-': {
+    case "-": {
       if (info.metaKey || info.ctrlKey) {
-        e.preventDefault()
-        machine.send('ZOOMED_OUT', info)
+        e.preventDefault();
+        machine.send("ZOOMED_OUT", info);
       }
-      break
+      break;
     }
-    case 's':
-    case 'v': {
-      machine.send('SELECTED_TOOL', { name: 'select' })
-      break
+    case "s":
+    case "v": {
+      machine.send("SELECTED_TOOL", { name: "select" });
+      break;
     }
-    case 'r':
-    case 'b': {
-      machine.send('SELECTED_TOOL', { name: 'box' })
-      break
+    case "r":
+    case "b": {
+      machine.send("SELECTED_TOOL", { name: "box" });
+      break;
     }
-    case 'd': {
-      machine.send('SELECTED_TOOL', { name: 'pencil' })
-      break
+    case "d": {
+      machine.send("SELECTED_TOOL", { name: "pencil" });
+      break;
     }
-    case 'e': {
-      machine.send('SELECTED_TOOL', { name: 'eraser' })
-      break
+    case "e": {
+      machine.send("SELECTED_TOOL", { name: "eraser" });
+      break;
     }
-    case 'a': {
+    case "a": {
       if (info.metaKey || info.ctrlKey) {
-        machine.send('SELECTED_ALL')
-        e.preventDefault()
+        machine.send("SELECTED_ALL");
+        e.preventDefault();
       } else {
-        machine.send('SELECTED_TOOL', { name: 'arrow' })
+        machine.send("SELECTED_TOOL", { name: "arrow" });
       }
-      break
+      break;
     }
-    case 'z': {
+    case "z": {
       if (info.metaKey || info.ctrlKey) {
         if (info.shiftKey) {
-          machine.send('REDO')
+          machine.send("REDO");
         } else {
-          machine.send('UNDO')
+          machine.send("UNDO");
         }
       }
-      break
+      break;
     }
   }
-}
+};
 
 const onKeyUp: TLKeyboardEventHandler = (key, info, e) => {
   switch (key) {
-    case 'Alt':
-    case 'Meta':
-    case 'Control':
-    case 'Shift': {
-      machine.send('TOGGLED_MODIFIER', info)
-      break
+    case "Alt":
+    case "Meta":
+    case "Control":
+    case "Shift": {
+      machine.send("TOGGLED_MODIFIER", info);
+      break;
     }
   }
-}
+};
 
 interface AppProps {
-  onMount?: (api: Api) => void
+  onMount?: (api: Api) => void;
 }
 
 export default function App({ onMount }: AppProps) {
-  const appState = useStateDesigner(machine)
+  const appState = useStateDesigner(machine);
 
   React.useEffect(() => {
-    const api = new Api(appState)
-    onMount?.(api)
-    window['api'] = api
-  }, [])
+    const api = new Api(appState);
+    onMount?.(api);
+    window["api"] = api;
+  }, []);
 
-  const hideBounds = appState.isInAny('transformingSelection', 'translating', 'creating')
+  const hideBounds = appState.isInAny(
+    "transformingSelection",
+    "translating",
+    "creating"
+  );
 
-  const firstShapeId = appState.data.pageState.selectedIds[0]
-  const firstShape = firstShapeId ? appState.data.page.shapes[firstShapeId] : null
+  const firstShapeId = appState.data.pageState.selectedIds[0];
+  const firstShape = firstShapeId
+    ? appState.data.page.shapes[firstShapeId]
+    : null;
   const hideResizeHandles = firstShape
     ? appState.data.pageState.selectedIds.length === 1 &&
       (shapeUtils[firstShape.type] as any).hideResizeHandles
-    : false
+    : false;
 
   return (
     <AppContainer>
@@ -228,18 +234,17 @@ export default function App({ onMount }: AppProps) {
         hideBindingHandles={true}
       />
       <Toolbar activeStates={appState.active} lastEvent={appState.log[0]} />
-      <TitleLinks />
     </AppContainer>
-  )
+  );
 }
 
-const AppContainer = styled('div', {
-  position: 'fixed',
-  top: '0px',
-  left: '0px',
-  right: '0px',
-  bottom: '0px',
-  width: '100%',
-  height: '100%',
+const AppContainer = styled("div", {
+  position: "fixed",
+  top: "0px",
+  left: "0px",
+  right: "0px",
+  bottom: "0px",
+  width: "100%",
+  height: "100%",
   zIndex: 101,
-})
+});
