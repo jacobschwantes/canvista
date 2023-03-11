@@ -10,7 +10,6 @@ import {
 import * as React from "react";
 import { Api } from "state/api";
 import styled from "stitches.config";
-import { TitleLinks } from "./components/TitleLinks";
 import { Toolbar } from "./components/Toolbar";
 import { shapeUtils } from "./shapes";
 import { machine } from "./state/machine";
