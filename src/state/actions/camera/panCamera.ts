@@ -4,5 +4,5 @@ import type { Action } from 'state/constants'
 
 export const panCamera: Action = (data, payload: TLPointerInfo) => {
   const { point, zoom } = data.pageState.camera
-  data.pageState.camera.point = Vec.sub(point, Vec.div(payload.delta, zoom))
+  data.pageState.camera.point = Vec.sub(point, Vec.div(Vec.neg(payload.delta), zoom))
 }

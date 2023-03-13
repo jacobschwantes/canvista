@@ -125,7 +125,10 @@ const onKeyDown: TLKeyboardEventHandler = (key, info, e) => {
       machine.send("SELECTED_TOOL", { name: "select" });
       break;
     }
-    case "r":
+    case "r": {
+      machine.send("RESET");
+      break;
+    }
     case "b": {
       machine.send("SELECTED_TOOL", { name: "box" });
       break;
@@ -136,6 +139,10 @@ const onKeyDown: TLKeyboardEventHandler = (key, info, e) => {
     }
     case "e": {
       machine.send("SELECTED_TOOL", { name: "eraser" });
+      break;
+    }
+    case "m": {
+      machine.send("SELECTED_TOOL", { name: "move" });
       break;
     }
     case "a": {
@@ -157,6 +164,10 @@ const onKeyDown: TLKeyboardEventHandler = (key, info, e) => {
       }
       break;
     }
+    case " ": {
+      machine.send("FORCE_PAN", info);
+      break;
+    }
   }
 };
 
@@ -167,6 +178,10 @@ const onKeyUp: TLKeyboardEventHandler = (key, info, e) => {
     case "Control":
     case "Shift": {
       machine.send("TOGGLED_MODIFIER", info);
+      break;
+    }
+    case " ": {
+      machine.send("PAN_END", info);
       break;
     }
   }
